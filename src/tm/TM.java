@@ -55,14 +55,31 @@ public class TM {
             }
         case "DESCRIBE":
             {
-            String data = args[1];
-            String description = args[2];
-            this.describe(data,description);
+                if (args.length == 4)
+                {
+                    String data = args[1];
+                    String description = args[2];
+                    String size = args[3];
+                    this.describe(data,description,size);
+                }
+                else
+                {
+                   String data = args[1];
+                   String description = args[2];
+                   this.describe(data,description);
+                }
             break;
+            }
+        case "SIZE":
+            {
+                String data = args[1];
+                String size = args[2];
+                this.addSize(data,size);
+                break;
             }
         default:
         {
-            System.out.println("Please enter a valid command: start, stop, describe, summary");
+            System.out.println("Please enter a valid command: start, stop, describe, size, summary");
             break;
         }
     }
@@ -88,6 +105,17 @@ public class TM {
     Log log = new Log();
     log.writeEntry("Describe " + data + " " + desc);
     // use log to write a line to a text file with a description of the task
+  }
+  void describe (String data, String desc, String size)
+  {
+      Log log = new Log();
+      log.writeEntry("Describe " + data + " " + desc);
+      log.writeEntry("Size " + data + " " + size);
+  }
+  void addSize(String data, String size)
+  {
+      Log log = new Log();
+      log.writeEntry("Size " + data + " " + size);
   }
   void summary(LinkedList<String> fList, LinkedList<Task> tList, String taskToSum)
   {
