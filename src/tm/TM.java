@@ -228,7 +228,7 @@ public class TM {
         {
             Task display = new Task();
             display = tList.pop();
-            System.out.println(display.name + ": Total Time HH MM SS:" + display.getTotalTime() + " Size: " + display.size);
+            System.out.println(display.name + ": Total Time HH MM SS:  " + display.getTotalTime() + " Size: " + display.size);
             display.printDes();
             System.out.println();
             k++;
@@ -247,7 +247,7 @@ public class TM {
                 //check if the current task is the one the user wants
                 // if so display its summary
                 taskFound = true;
-                System.out.println(display.name + ": Total Time HH MM SS:" + display.getTotalTime() + " Size: " + display.size);
+                System.out.println(display.name + ": Total Time HH MM SS:  " + display.getTotalTime() + " Size: " + display.size);
                 display.printDes();
                 System.out.println("\n");
             }
