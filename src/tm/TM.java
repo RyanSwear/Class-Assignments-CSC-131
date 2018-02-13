@@ -137,11 +137,11 @@ public class TM {
             {//check the command that was entered on each line
                 //enter data into the task depending on the command
                 case "Start":
-                        task.starTime = Long.parseLong(tokens[2]);
+                        task.starTime.addLast(Long.parseLong(tokens[2]));
                 case "Stop":
-                        task.endTime = Long.parseLong(tokens[2]);
+                        task.endTime.addLast(Long.parseLong(tokens[2]));
                 case "Describe": 
-                        task.description = tokens[2];
+                        task.description.addLast(tokens[2]);
                 default:
                     break;
             }
@@ -163,11 +163,11 @@ public class TM {
                     {//check the command that was entered on each line
                 //enter data into the task depending on the command
                         case "Start":
-                            task.starTime = Long.parseLong(tokens[2]);
+                            task.starTime.addLast(Long.parseLong(tokens[2]));
                         case "Stop":
-                            task.endTime = Long.parseLong(tokens[2]);
+                            task.endTime.addLast(Long.parseLong(tokens[2]));
                         case "Describe": 
-                            task.description = tokens[2];
+                            task.description.addLast(tokens[2]);
                         default:
                             break;
                     }
@@ -185,11 +185,11 @@ public class TM {
                  switch (tokens[0])
                 {
                     case "Start":
-                        task2.starTime = Long.parseLong(tokens[2]);
+                        task2.starTime.addLast(Long.parseLong(tokens[2]));
                     case "Stop":
-                        task2.endTime = Long.parseLong(tokens[2]);
+                        task2.endTime.addLast(Long.parseLong(tokens[2]));
                     case "Describe": 
-                        task2.description = tokens[2];
+                        task2.description.addLast(tokens[2]);
                     default:
                         break;
                 }
@@ -273,22 +273,27 @@ class Log{
 }
 
 class Task{
-    String name, description;
-    long starTime,endTime,totalTime;
-    //each task has a name, description, times to start, end, and the ellapsed time
+    String name;
+    LinkedList<String> description;
+    LinkedList<Long> starTime;
+    LinkedList<Long> endTime;
+    long totalTime = 0;
+    
+    //each task has a name, description, times to start, end, a size, and the ellapsed time
     String getTotalTime()
     {
-        if (starTime == 0 || endTime == 0)
+        int i = 0;
+        while (i < endTime.size())
         {
-            return " 00:00:00";
+            long sTime = starTime.pop();
+            long eTime = endTime.pop();
+            totalTime += eTime - sTime;
+            i++;
         }
-        else{// create a time stamp in hours::minutes::seconds as a string
-            totalTime = endTime - starTime;
-            return (String.format("%02d:%02d:%02d",
+        return (String.format("%02d:%02d:%02d",
                     TimeUnit.MILLISECONDS.toHours(totalTime),
                     TimeUnit.MILLISECONDS.toMinutes(totalTime)-TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(totalTime)),
                     TimeUnit.MILLISECONDS.toSeconds(totalTime) -TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(totalTime))));
-        }
     }
 }
  
