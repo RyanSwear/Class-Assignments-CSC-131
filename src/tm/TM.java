@@ -142,6 +142,8 @@ public class TM {
                         task.endTime.addLast(Long.parseLong(tokens[2]));
                 case "Describe": 
                         task.description.addLast(tokens[2]);
+                case "Size":
+                        task.size = tokens[2];
                 default:
                     break;
             }
@@ -168,6 +170,8 @@ public class TM {
                             task.endTime.addLast(Long.parseLong(tokens[2]));
                         case "Describe": 
                             task.description.addLast(tokens[2]);
+                        case "Size":
+                            task.size = tokens[2];
                         default:
                             break;
                     }
@@ -190,6 +194,8 @@ public class TM {
                         task2.endTime.addLast(Long.parseLong(tokens[2]));
                     case "Describe": 
                         task2.description.addLast(tokens[2]);
+                    case "Size":
+                        task2.size = tokens[2];
                     default:
                         break;
                 }
@@ -225,7 +231,9 @@ public class TM {
                 //check if the current task is the one the user wants
                 // if so display its summary
                 taskFound = true;
-                System.out.println(display.name + ": Total Time HH MM SS:" + display.getTotalTime() + " " + display.description);
+                System.out.println(display.name + ": Total Time HH MM SS:" + display.getTotalTime() + " Size: " + display.size);
+                display.printDes();
+                System.out.println("\n");
             }
             k++;
         }
@@ -273,7 +281,7 @@ class Log{
 }
 
 class Task{
-    String name;
+    String name,size = "NA";
     LinkedList<String> description;
     LinkedList<Long> starTime;
     LinkedList<Long> endTime;
@@ -283,7 +291,8 @@ class Task{
     String getTotalTime()
     {
         int i = 0;
-        while (i < endTime.size())
+        int j = endTime.size();
+        while (i < j)
         {
             long sTime = starTime.pop();
             long eTime = endTime.pop();
@@ -294,6 +303,17 @@ class Task{
                     TimeUnit.MILLISECONDS.toHours(totalTime),
                     TimeUnit.MILLISECONDS.toMinutes(totalTime)-TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(totalTime)),
                     TimeUnit.MILLISECONDS.toSeconds(totalTime) -TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(totalTime))));
+    }
+    void printDes()
+    {
+        int i = 0;
+        int j = description.size();
+        while (i < j)
+        {
+            String line = this.description.pop();
+            System.out.println(line);
+            i++;
+        }
     }
 }
  
