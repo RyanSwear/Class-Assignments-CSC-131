@@ -137,13 +137,18 @@ public class TM {
             {//check the command that was entered on each line
                 //enter data into the task depending on the command
                 case "Start":
-                        task.starTime.addLast(Long.parseLong(tokens[2]));
+                        Long ts = Long.parseLong(tokens[2]);
+                        task.starTime.addFirst(ts);
+                        break;
                 case "Stop":
-                        task.endTime.addLast(Long.parseLong(tokens[2]));
+                        task.endTime.addFirst(Long.parseLong(tokens[2]));
+                        break;
                 case "Describe": 
-                        task.description.addLast(tokens[2]);
+                        task.description.addFirst(tokens[2]);
+                        break;
                 case "Size":
                         task.size = tokens[2];
+                        break;
                 default:
                     break;
             }
@@ -166,12 +171,16 @@ public class TM {
                 //enter data into the task depending on the command
                         case "Start":
                             task.starTime.addLast(Long.parseLong(tokens[2]));
+                            break;
                         case "Stop":
                             task.endTime.addLast(Long.parseLong(tokens[2]));
+                            break;
                         case "Describe": 
                             task.description.addLast(tokens[2]);
+                            break;
                         case "Size":
                             task.size = tokens[2];
+                            break;
                         default:
                             break;
                     }
@@ -189,13 +198,17 @@ public class TM {
                  switch (tokens[0])
                 {
                     case "Start":
-                        task2.starTime.addLast(Long.parseLong(tokens[2]));
+                        task2.starTime.addFirst(Long.parseLong(tokens[2]));
+                        break;
                     case "Stop":
-                        task2.endTime.addLast(Long.parseLong(tokens[2]));
+                        task2.endTime.addFirst(Long.parseLong(tokens[2]));
+                        break;
                     case "Describe": 
-                        task2.description.addLast(tokens[2]);
+                        task2.description.addFirst(tokens[2]);
+                        break;
                     case "Size":
                         task2.size = tokens[2];
+                        break;
                     default:
                         break;
                 }
@@ -209,12 +222,15 @@ public class TM {
     //check if all tasks or just a certain task should be displayed
     if (taskToSum == " ")
     {//if no task to check was entered, display all
-        int k = -1;
-        while (k < tList.size())
+        int k = 0;
+        int h = tList.size();
+        while (k < h)
         {
             Task display = new Task();
             display = tList.pop();
-            System.out.println(display.name + ": Total Time HH MM SS:" + display.getTotalTime() + " " + display.description);
+            System.out.println(display.name + ": Total Time HH MM SS:" + display.getTotalTime() + " Size: " + display.size);
+            display.printDes();
+            System.out.println();
             k++;
         }
     }
@@ -282,21 +298,23 @@ class Log{
 
 class Task{
     String name,size = "NA";
-    LinkedList<String> description;
-    LinkedList<Long> starTime;
-    LinkedList<Long> endTime;
-    long totalTime = 0;
-    
+    LinkedList<String> description = new LinkedList();
+    LinkedList<Long> starTime = new LinkedList();
+    LinkedList<Long> endTime = new LinkedList();
+    Long totalTime  = 0L ;
+    Long sTime = 0L;
+    Long eTime = 0L;
     //each task has a name, description, times to start, end, a size, and the ellapsed time
     String getTotalTime()
     {
+        
         int i = 0;
         int j = endTime.size();
         while (i < j)
         {
-            long sTime = starTime.pop();
-            long eTime = endTime.pop();
-            totalTime += eTime - sTime;
+            sTime = this.starTime.pop();
+            eTime = this.endTime.pop();
+            this.totalTime += eTime - sTime;
             i++;
         }
         return (String.format("%02d:%02d:%02d",
