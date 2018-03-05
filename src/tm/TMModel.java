@@ -8,6 +8,8 @@ package tm;
 import java.util.Date;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.time.*;
+import java.time.temporal.ChronoUnit;
 
 /**
  *
@@ -18,16 +20,16 @@ public class TMModel implements ITMModel{
     Log log = new Log();
     public boolean startTask(String name)
     {   
-        Date date = new Date();
-        log.writeEntry("Start " + name + " " + date.getTime());
+        //Date date = new Date();
+        log.writeEntry("Start " + name + " " + LocalDateTime.now().toString());
         // use log to write a line to a text file with the tasks start time
         return true;
     }
     
     public boolean stopTask(String name)
     {   
-        Date date = new Date();
-        log.writeEntry("Stop " + name + " " + date.getTime());
+        //Date date = new Date();
+        log.writeEntry("Stop " + name + " " + LocalDateTime.now().toString());
     // use log to write a line to a text file with the tasks end time
         return true;
     }
@@ -90,8 +92,10 @@ public class TMModel implements ITMModel{
     {
        // String time = new String();
         LinkedList<String> lines = new LinkedList<>();
-        LinkedList<Long> starts = new LinkedList<>();
-        LinkedList<Long> stops = new LinkedList<>();
+       // LinkedList<Long> starts = new LinkedList<>();
+       // LinkedList<Long> stops = new LinkedList<>();
+        LinkedList<LocalDateTime> starts = new LinkedList<>();
+        LinkedList<LocalDateTime> stops = new LinkedList<>();
         Long totalTime = 0L;
         log.read(lines);
         
@@ -103,11 +107,11 @@ public class TMModel implements ITMModel{
             String[] tokens = line.split(" ", 3);
             if ((tokens[0] == "Start") && (tokens[1] == name))
             {
-                starts.push(Long.parseLong(tokens[2]));
+                starts.push(LocalDateTime.parse(tokens[2]));
             }
             else if ((tokens[0] == "Stop") && (tokens[1] == name))
             {
-                stops.push(Long.parseLong(tokens[2]));
+                stops.push(LocalDateTime.parse(tokens[2]));
             } 
             i++;
         }
@@ -115,13 +119,10 @@ public class TMModel implements ITMModel{
         i = 0;
         while (i < stops.size())
         {
-            totalTime += stops.pop() - starts.pop();
+            totalTime += ChronoUnit.SECONDS.between(starts.pop(), stops.pop());
         }
         
-        return (String.format("%02d:%02d:%02d",
-                    TimeUnit.MILLISECONDS.toHours(totalTime),
-                    TimeUnit.MILLISECONDS.toMinutes(totalTime)-TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(totalTime)),
-                    TimeUnit.MILLISECONDS.toSeconds(totalTime) -TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(totalTime))));
+        return (totalTime.toString());
     }
     
     public String taskSize(String name)
@@ -166,16 +167,73 @@ public class TMModel implements ITMModel{
     
     public String minTimeForSize(String size)
     {
-        String time = new String();
-        time = "";
         
-        return time;
+        String time1 = new String();
+        String time2 = new String();
+        time1 = "";
+        Long min = 0l;
+        Long seconds = 0l;
+       // String description = new String();
+        String line = new String();
+        LinkedList<String> lines = new LinkedList<>();
+        log.read(lines);
+        int i = 0;
+        while (i < lines.size())
+        {
+            line = lines.pop();
+            String[] tokens = line.split(" ", 3);
+            if (tokens[0] == "Size" && tokens[2] == size)
+            {
+                time2 = taskElapsedTime(tokens[1]);//string in seconds in Long form
+                seconds = Long.parseLong(time2);
+                if (min == 0l)
+                {
+                    min = seconds;
+                }
+                else if (min > seconds)
+                {
+                    min = seconds;
+                }
+            }
+            i++;
+        }
+        time1 = seconds.toString();
+        return time1;
     }
     
     public String maxTimeForSize(String size)
     {
-        String time = new String();
-        return time;
+        String time1 = new String();
+        String time2 = new String();
+        time1 = "";
+        Long max = 0l;
+        Long seconds = 0l;
+       
+        String line = new String();
+        LinkedList<String> lines = new LinkedList<>();
+        log.read(lines);
+        int i = 0;
+        while (i < lines.size())
+        {
+            line = lines.pop();
+            String[] tokens = line.split(" ", 3);
+            if (tokens[0] == "Size" && tokens[2] == size)
+            {
+                time2 = taskElapsedTime(tokens[1]);//string in seconds in Long form
+                seconds = Long.parseLong(time2);
+                if (max == 0l)
+                {
+                    max = seconds;
+                }
+                else if (max < seconds)
+                {
+                    max = seconds;
+                }
+            }
+            i++;
+        }
+        time1 = seconds.toString();
+        return time1;
     }
     
     public String avgTimeForSize(String size)
