@@ -8,13 +8,13 @@ import java.io.*;
 import java.util.concurrent.TimeUnit;
 public class TM {
 
-    
+    TMModel tmModel = new TMModel();
     public static void main(String[] args) {
         
     TM tm = new TM();
-    tm.appMain(args);
+    tm.run(args);
     }
-    void appMain(String[] args)
+    void run(String[] args)
   {
     if(args.length == 0)
     {
@@ -24,21 +24,21 @@ public class TM {
     else if ( args.length > 0)
     {
         String cmd = args[0].toUpperCase();
-        LinkedList<String> fileList = new LinkedList();//will load the entire file line by line to a string, the string will then be split into tokens for further disection
-        LinkedList<Task> taskList = new LinkedList();//used to store each task with its appropriate information
+        //LinkedList<String> fileList = new LinkedList();//will load the entire file line by line to a string, the string will then be split into tokens for further disection
+        //Set<Task> taskList = new Set();//used to store each task with its appropriate information
     //check the command entered and execute the appropriate method
         switch (cmd)
         {
         case "START":
             {
             String data = args[1];
-            this.start(data);
+            tmModel.startTask(data);
             break;
             }
         case "STOP":
             {
             String data = args[1];
-            this.stop(data);
+            tmModel.stopTask(data);
             break;
             }
         case "SUMMARY":
@@ -50,7 +50,7 @@ public class TM {
              }
              else{taskToSum = args[1];}
              
-            this.summary(fileList, taskList, taskToSum);
+            this.summary(taskToSum);
             break;
             }
         case "DESCRIBE":
@@ -60,13 +60,14 @@ public class TM {
                     String data = args[1];
                     String description = args[2];
                     String size = args[3];
-                    this.describe(data,description,size);
+                    tmModel.describeTask(data,description);
+                    tmModel.sizeTask(data, size);
                 }
                 else
                 {
                    String data = args[1];
                    String description = args[2];
-                   this.describe(data,description);
+                   tmModel.describeTask(data,description);
                 }
             break;
             }
@@ -74,7 +75,7 @@ public class TM {
             {
                 String data = args[1];
                 String size = args[2];
-                this.addSize(data,size);
+                tmModel.sizeTask(data,size);
                 break;
             }
         default:
@@ -117,7 +118,7 @@ public class TM {
       Log log = new Log();
       log.writeEntry("Size " + data + " " + size);
   }
-  void summary(LinkedList<String> fList, LinkedList<Task> tList, String taskToSum)
+  void summary(String taskToSum)
   {
     Log log = new Log();
     String line = new String();
@@ -264,74 +265,6 @@ public class TM {
   }
   
 }
-class Log{
-  
-  void writeEntry(String line)
-  {
-    try{//establish a stream to the desired file and write the data to it on a single line
-      PrintWriter writer = new PrintWriter(new FileWriter("TM.txt",true)); 
-      writer.println(line);
-      writer.close();
-    }
-    catch (IOException exception){//send report to user if the program cant find the file
-      System.out.println("Could not open file.");
-    }
-  }
- void read(LinkedList<String> list)
-  {//read the entire file into a Linked List of strings ine by line
-      String string = new String();
-    try{
-       FileReader file = new FileReader("TM.txt");
-       BufferedReader reader = new BufferedReader(file);
-       string = reader.readLine();
-       while (string != null)
-       {
-        list.add(string);
-        string = reader.readLine();
-       }
-    }
-    catch (IOException exception){
-      System.out.println("Could not open file.");
-    }
-  }
-}
 
-class Task{
-    String name,size = "NA";
-    LinkedList<String> description = new LinkedList();
-    LinkedList<Long> starTime = new LinkedList();
-    LinkedList<Long> endTime = new LinkedList();
-    Long totalTime  = 0L ;
-    Long sTime = 0L;
-    Long eTime = 0L;
-    //each task has a name, description, times to start, end, a size, and the ellapsed time
-    String getTotalTime()
-    {
-        
-        int i = 0;
-        int j = endTime.size();
-        while (i < j)
-        {
-            sTime = this.starTime.pop();
-            eTime = this.endTime.pop();
-            this.totalTime += eTime - sTime;
-            i++;
-        }
-        return (String.format("%02d:%02d:%02d",
-                    TimeUnit.MILLISECONDS.toHours(totalTime),
-                    TimeUnit.MILLISECONDS.toMinutes(totalTime)-TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(totalTime)),
-                    TimeUnit.MILLISECONDS.toSeconds(totalTime) -TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(totalTime))));
-    }
-    void printDes()
-    {
-        int i = 0;
-        int j = description.size();
-        while (i < j)
-        {
-            String line = this.description.pop();
-            System.out.println(line);
-            i++;
-        }
-    }
-}
- 
+
+
