@@ -239,12 +239,47 @@ public class TMModel implements ITMModel{
     public String avgTimeForSize(String size)
     {
         String time = new String();
+        Long ave = 0l;
+        Long seconds = 0l;
+        Long counter = 0l;
+        String line = new String();
+        LinkedList<String> lines = new LinkedList<>();
+        log.read(lines);
+        int i = 0;
+        while (i < lines.size())
+        {
+            line = lines.pop();
+            String[] tokens = line.split(" ", 3);
+            if (tokens[0] == "Size" && tokens[2] == size)
+            {
+                time = taskElapsedTime(tokens[1]);//string in seconds in Long form
+                seconds = Long.parseLong(time);
+                ave += seconds;
+            }
+            i++;
+        }
+        ave = ave/counter;
+        time = ave.toString();
         return time;
     }
     
     public Set<String> taskNamesForSize(String size)
     {
         Set<String> tasks = new HashSet<>();
+        String line = new String();
+        LinkedList<String> lines = new LinkedList<>();
+        log.read(lines);
+        int i = 0;
+        while (i < lines.size())
+        {
+            line = lines.pop();
+            String[] tokens = line.split(" ", 3);
+            if (tokens[0] == "Size" && tokens[2] == size)
+            {
+                tasks.add(tokens[1]);
+            }
+            i++;
+        }
         return tasks;
     }
     
