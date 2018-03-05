@@ -1,6 +1,6 @@
 //Author: Ryan Swearingen
 //Class:  CSC 131 section 4
-//Assignment: Task Manager Week 2
+//Assignment: Task Manager Sprint 2 Feb 13
 package tm;
 
 import java.util.*;
