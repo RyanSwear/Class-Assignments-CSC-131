@@ -285,8 +285,37 @@ public class TMModel implements ITMModel{
     
     public String elapsedTimeForAllTasks()
     {
-        String time = new String();
-        return time;
+        
+        LinkedList<String> lines = new LinkedList<>();
+       
+        LinkedList<LocalDateTime> starts = new LinkedList<>();
+        LinkedList<LocalDateTime> stops = new LinkedList<>();
+        Long totalTime = 0L;
+        log.read(lines);
+        
+        String line = new String();
+        int i = 0;
+        while (i < lines.size())
+        {
+            line = lines.pop();
+            String[] tokens = line.split(" ", 3);
+            if (tokens[0] == "Start")
+            {
+                starts.push(LocalDateTime.parse(tokens[2]));
+            }
+            else if (tokens[0] == "Stop")
+            {
+                stops.push(LocalDateTime.parse(tokens[2]));
+            } 
+            i++;
+        }
+        
+        i = 0;
+        while (i < stops.size())
+        {
+            totalTime += ChronoUnit.SECONDS.between(starts.pop(), stops.pop());
+        }
+        return totalTime.toString();
     }
     
     public Set<String> taskNames()
