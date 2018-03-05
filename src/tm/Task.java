@@ -26,7 +26,7 @@ public class Task {
     Long sTime = 0L;
     Long eTime = 0L;
     //each task has a name, description, times to start, end, a size, and the ellapsed time
-    String getTotalTime()
+    String getTotalTimeString()
     {
 
         int i = 0;

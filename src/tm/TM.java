@@ -199,7 +199,7 @@ public class TM {
         {
             Task display = new Task();
             display = tList.pop();
-            System.out.println(display.name + ": Total Time HH MM SS:  " + display.getTotalTime() + " Size: " + display.size);
+            System.out.println(display.name + ": Total Time HH MM SS:  " + display.getTotalTimeString() + " Size: " + display.size);
             display.printDes();
             System.out.println();
             k++;

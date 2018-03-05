@@ -133,6 +133,7 @@ public class TMModel implements ITMModel{
         int i = 0;
         while (i < lines.size())
         {
+            line = lines.pop();
             String[] tokens = line.split(" ", 3);
             if (tokens[0] == "Size" && tokens[1] == name)
             {
@@ -146,12 +147,28 @@ public class TMModel implements ITMModel{
     public String taskDescription(String name)
     {
         String description = new String();
+        String line = new String();
+        LinkedList<String> lines = new LinkedList<>();
+        log.read(lines);
+        int i = 0;
+        while (i < lines.size())
+        {
+            line = lines.pop();
+            String[] tokens = line.split(" ", 3);
+            if (tokens[0] == "Describe" && tokens[1] == name)
+            {
+                description.concat(tokens[2] + " ");
+            }
+            i++;
+        }
         return description;
     }
     
     public String minTimeForSize(String size)
     {
         String time = new String();
+        time = "";
+        
         return time;
     }
     
