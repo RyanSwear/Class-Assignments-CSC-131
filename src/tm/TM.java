@@ -24,8 +24,8 @@ public class TM {
     else if ( args.length > 0)
     {
         String cmd = args[0].toUpperCase();
-        //LinkedList<String> fileList = new LinkedList();//will load the entire file line by line to a string, the string will then be split into tokens for further disection
-        //Set<Task> taskList = new Set();//used to store each task with its appropriate information
+        LinkedList<String> fileList = new LinkedList();//will load the entire file line by line to a string, the string will then be split into tokens for further disection
+        LinkedList<Task> taskList = new LinkedList();//used to store each task with its appropriate information
     //check the command entered and execute the appropriate method
         switch (cmd)
         {
@@ -50,7 +50,7 @@ public class TM {
              }
              else{taskToSum = args[1];}
              
-            this.summary(taskToSum);
+            this.summary(fileList, taskList, taskToSum);
             break;
             }
         case "DESCRIBE":
@@ -87,38 +87,8 @@ public class TM {
     }
     
   }
-  void start(String data)
-  {
-    Log log = new Log();
-    Date date = new Date();
-    log.writeEntry("Start " + data + " " + date.getTime());
-    // use log to write a line to a text file with the tasks start time
-  }
-  void stop(String data)
-  {
-    Log log = new Log();
-    Date date = new Date();
-    log.writeEntry("Stop " + data + " " + date.getTime());
-    // use log to write a line to a text file with the tasks end time
-  }
-  void describe(String data, String desc)
-  {
-    Log log = new Log();
-    log.writeEntry("Describe " + data + " " + desc);
-    // use log to write a line to a text file with a description of the task
-  }
-  void describe (String data, String desc, String size)
-  {
-      Log log = new Log();
-      log.writeEntry("Describe " + data + " " + desc);
-      log.writeEntry("Size " + data + " " + size);
-  }
-  void addSize(String data, String size)
-  {
-      Log log = new Log();
-      log.writeEntry("Size " + data + " " + size);
-  }
-  void summary(String taskToSum)
+ 
+  void summary(LinkedList<String> fList, LinkedList<Task> tList, String taskToSum)
   {
     Log log = new Log();
     String line = new String();

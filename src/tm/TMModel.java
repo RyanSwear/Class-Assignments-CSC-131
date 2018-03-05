@@ -17,8 +17,7 @@ public class TMModel implements ITMModel{
     
     Log log = new Log();
     public boolean startTask(String name)
-    {
-        
+    {   
         Date date = new Date();
         log.writeEntry("Start " + name + " " + date.getTime());
         // use log to write a line to a text file with the tasks start time
@@ -26,8 +25,7 @@ public class TMModel implements ITMModel{
     }
     
     public boolean stopTask(String name)
-    {
-        
+    {   
         Date date = new Date();
         log.writeEntry("Stop " + name + " " + date.getTime());
     // use log to write a line to a text file with the tasks end time
@@ -36,15 +34,13 @@ public class TMModel implements ITMModel{
     
     public boolean describeTask(String name, String description)
     {
-        
         log.writeEntry("Describe " + name + " " + description);
         return true;
     // use log to write a line to a text file with a description of the task
     }
     
     public boolean sizeTask(String name, String size)
-    {
-        
+    {   
         log.writeEntry("Size " + name + " " + size);
         return true;
     }
@@ -131,6 +127,19 @@ public class TMModel implements ITMModel{
     public String taskSize(String name)
     {
         String size =  new String();
+        String line = new String();
+        LinkedList<String> lines = new LinkedList<>();
+        log.read(lines);
+        int i = 0;
+        while (i < lines.size())
+        {
+            String[] tokens = line.split(" ", 3);
+            if (tokens[0] == "Size" && tokens[1] == name)
+            {
+                size = tokens[2];
+            }
+            i++;
+        }
         return size;
     }
     
