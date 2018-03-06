@@ -31,13 +31,19 @@ public class TM {
             case "START":
                 {
                 String data = args[1];
-                tmModel.startTask(data);
+                if(tmModel.startTask(data))
+                {
+                   System.out.println("Entry succesful");
+                }
                 break;
                 }
             case "STOP":
                 {
                 String data = args[1];
-                tmModel.stopTask(data);
+                if(tmModel.stopTask(data))
+                {
+                    System.out.println("Entry successful");
+                }
                 break;
                 }
             case "SUMMARY":
@@ -61,14 +67,16 @@ public class TM {
                         String data = args[1];
                         String description = args[2];
                         String size = args[3];
-                        tmModel.describeTask(data,description);
-                        tmModel.sizeTask(data, size);
+                       boolean succes1 = tmModel.describeTask(data,description);
+                       boolean succes2 = tmModel.sizeTask(data, size);
+                       if (succes1 && succes2){ System.out.println("Entry Successful");}
                     }
                     else
                     {
                         String data = args[1];
                         String description = args[2];
-                        tmModel.describeTask(data,description);
+                        boolean success3 = tmModel.describeTask(data,description);
+                        if (success3){System.out.println("Entry Successful");}
                     }
                 break;
             }
@@ -76,12 +84,34 @@ public class TM {
                 {
                     String data = args[1];
                     String size = args[2];
-                    tmModel.sizeTask(data,size);
+                    if(tmModel.sizeTask(data,size))
+                    {
+                        System.out.println("Entry Successful");
+                    }
+                    break;
+                }
+            case "RENAME":
+                {
+                    String oldName = args[1];
+                    String newName = args[2];
+                    if(tmModel.renameTask(oldName, newName))
+                    {
+                        System.out.println("Rename successful");
+                    }
+                    break;
+                }
+            case "DELETE":
+                {
+                    String delete = args[1];
+                    if(tmModel.deleteTask(delete))
+                    {
+                        System.out.println("Delete successful");
+                    }
                     break;
                 }
             default:
             {
-                System.out.println("Please enter a valid command: start, stop, describe, size, summary");
+                System.out.println("Please enter a valid command: start, stop, describe, size, summary, rename, delete");
                 break;
             }
             }

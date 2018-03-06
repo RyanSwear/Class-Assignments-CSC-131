@@ -17,18 +17,20 @@ import java.util.LinkedList;
  * @author RMswearingen
  */
 public class Log {
-    void writeEntry(String line)
+    boolean writeEntry(String line)
     {
         try{//establish a stream to the desired file and write the data to it on a single line
         PrintWriter writer = new PrintWriter(new FileWriter("TM.txt",true)); 
         writer.println(line);
         writer.close();
+        return true;
         }
         catch (IOException exception){//send report to user if the program cant find the file
         System.out.println("Could not open file.");
+        return false;
         }
     }
- void read(LinkedList<String> list)
+    boolean read(LinkedList<String> list)
     {//read the entire file into a Linked List of strings ine by line
       String string = new String();
         try{
@@ -40,9 +42,11 @@ public class Log {
             list.add(string);
             string = reader.readLine();
         }
+        return true;
         }
         catch (IOException exception){
         System.out.println("Could not open file.");
+        return false;
         }
     }
  void clearFile()

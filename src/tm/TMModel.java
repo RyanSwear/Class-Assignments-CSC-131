@@ -20,31 +20,25 @@ public class TMModel implements ITMModel{
     Log log = new Log();
     public boolean startTask(String name)
     {   
-        //Date date = new Date();
-        log.writeEntry("Start " + name + " " + LocalDateTime.now().toString());
         // use log to write a line to a text file with the tasks start time
-        return true;
+        return log.writeEntry("Start " + name + " " + LocalDateTime.now().toString());
     }
     
     public boolean stopTask(String name)
-    {   
-        //Date date = new Date();
-        log.writeEntry("Stop " + name + " " + LocalDateTime.now().toString());
+    {       
     // use log to write a line to a text file with the tasks end time
-        return true;
+        return log.writeEntry("Stop " + name + " " + LocalDateTime.now().toString());
     }
     
     public boolean describeTask(String name, String description)
     {
-        log.writeEntry("Describe " + name + " " + description);
-        return true;
+        return log.writeEntry("Describe " + name + " " + description);
     // use log to write a line to a text file with a description of the task
     }
     
     public boolean sizeTask(String name, String size)
     {   
-        log.writeEntry("Size " + name + " " + size);
-        return true;
+        return log.writeEntry("Size " + name + " " + size);
     }
     
     public boolean deleteTask(String name)
