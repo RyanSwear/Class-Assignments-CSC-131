@@ -116,7 +116,7 @@ public class TM {
   }
   void summary(String taskToSum)
   {
-          System.out.println("Task Name: " + taskToSum + " Total Time:" + tmModel.taskElapsedTime(taskToSum));
+          System.out.println("Task Name: " + taskToSum + " Total Time:" + tmModel.taskElapsedTime(taskToSum) + " seconds");
           System.out.println("Description: " + tmModel.taskDescription(taskToSum));
           System.out.println("Size: " + tmModel.taskSize(taskToSum));
           System.out.println();

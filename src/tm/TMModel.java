@@ -54,11 +54,12 @@ public class TMModel implements ITMModel{
         log.clearFile();
         String line = new String();
         int i = 0;
-        while (i < lines.size())
+        int j = lines.size();
+        while (i < j)
         {
             line = lines.pop();
             String[] tokens = line.split(" ", 3);
-            if (tokens[1] != name)
+            if (tokens[1].compareTo(name) != 0)
             {
                 log.writeEntry(line);
             }
@@ -74,11 +75,12 @@ public class TMModel implements ITMModel{
         log.clearFile();
         String line = new String();
         int i = 0;
-        while (i < lines.size())
+        int j = lines.size();
+        while (i < j)
         {
             line = lines.pop();
             String[] tokens = line.split(" ", 3);
-            if (tokens[1] == oldName)
+            if (tokens[1].compareTo(oldName) == 0)
             {
                 tokens[1] = newName;
             }
@@ -101,15 +103,16 @@ public class TMModel implements ITMModel{
         
         String line = new String();
         int i = 0;
-        while (i < lines.size())
+        int j = lines.size();
+        while (i < j)
         {
             line = lines.pop();
             String[] tokens = line.split(" ", 3);
-            if ((tokens[0] == "Start") && (tokens[1] == name))
+            if ((tokens[0].compareTo("Start") == 0) && (tokens[1].compareTo(name) == 0))
             {
                 starts.push(LocalDateTime.parse(tokens[2]));
             }
-            else if ((tokens[0] == "Stop") && (tokens[1] == name))
+            else if ((tokens[0].compareTo("Stop") == 0) && (tokens[1].compareTo(name) == 0))
             {
                 stops.push(LocalDateTime.parse(tokens[2]));
             } 
@@ -117,9 +120,12 @@ public class TMModel implements ITMModel{
         }
         
         i = 0;
-        while (i < stops.size())
+        j = stops.size();
+        while (i < j)
         {
-            totalTime += ChronoUnit.SECONDS.between(starts.pop(), stops.pop());
+            long calc = ChronoUnit.SECONDS.between(starts.pop(), stops.pop());
+            totalTime += calc;
+            i++;
         }
         
         return (totalTime.toString());
@@ -132,11 +138,12 @@ public class TMModel implements ITMModel{
         LinkedList<String> lines = new LinkedList<>();
         log.read(lines);
         int i = 0;
-        while (i < lines.size())
+        int j = lines.size();
+        while (i < j)
         {
             line = lines.pop();
             String[] tokens = line.split(" ", 3);
-            if (tokens[0] == "Size" && tokens[1] == name)
+            if (tokens[0].compareTo("Size") == 0 && tokens[1].compareTo(name) == 0)
             {
                 size = tokens[2];
             }
@@ -148,17 +155,19 @@ public class TMModel implements ITMModel{
     public String taskDescription(String name)
     {
         String description = new String();
+        description = "";
         String line = new String();
         LinkedList<String> lines = new LinkedList<>();
         log.read(lines);
         int i = 0;
-        while (i < lines.size())
+        int j = lines.size();
+        while (i < j)
         {
             line = lines.pop();
             String[] tokens = line.split(" ", 3);
-            if (tokens[0] == "Describe" && tokens[1] == name)
+            if (tokens[0].compareTo("Describe") == 0 && tokens[1].compareTo(name) == 0)
             {
-                description.concat(tokens[2] + " ");
+                description = description.concat(tokens[2] + " ");
             }
             i++;
         }
@@ -178,11 +187,12 @@ public class TMModel implements ITMModel{
         LinkedList<String> lines = new LinkedList<>();
         log.read(lines);
         int i = 0;
-        while (i < lines.size())
+        int j = lines.size();
+        while (i < j)
         {
             line = lines.pop();
             String[] tokens = line.split(" ", 3);
-            if (tokens[0] == "Size" && tokens[2] == size)
+            if (tokens[0].compareTo("Size") == 0 && tokens[2].compareTo(size) == 0)
             {
                 time2 = taskElapsedTime(tokens[1]);//string in seconds in Long form
                 seconds = Long.parseLong(time2);
@@ -213,11 +223,12 @@ public class TMModel implements ITMModel{
         LinkedList<String> lines = new LinkedList<>();
         log.read(lines);
         int i = 0;
-        while (i < lines.size())
+        int j = lines.size();
+        while (i < j)
         {
             line = lines.pop();
             String[] tokens = line.split(" ", 3);
-            if (tokens[0] == "Size" && tokens[2] == size)
+            if (tokens[0].compareTo("Size") == 0 && tokens[2].compareTo(size) == 0)
             {
                 time2 = taskElapsedTime(tokens[1]);//string in seconds in Long form
                 seconds = Long.parseLong(time2);
@@ -246,11 +257,12 @@ public class TMModel implements ITMModel{
         LinkedList<String> lines = new LinkedList<>();
         log.read(lines);
         int i = 0;
-        while (i < lines.size())
+        int j = lines.size();
+        while (i < j)
         {
             line = lines.pop();
             String[] tokens = line.split(" ", 3);
-            if (tokens[0] == "Size" && tokens[2] == size)
+            if (tokens[0].compareTo("Size") == 0 && tokens[2].compareTo(size) == 0)
             {
                 time = taskElapsedTime(tokens[1]);//string in seconds in Long form
                 seconds = Long.parseLong(time);
@@ -270,11 +282,12 @@ public class TMModel implements ITMModel{
         LinkedList<String> lines = new LinkedList<>();
         log.read(lines);
         int i = 0;
-        while (i < lines.size())
+        int j = lines.size();
+        while (i < j)
         {
             line = lines.pop();
             String[] tokens = line.split(" ", 3);
-            if (tokens[0] == "Size" && tokens[2] == size)
+            if (tokens[0].compareTo("Size") == 0 && tokens[2].compareTo(size) == 0)
             {
                 tasks.add(tokens[1]);
             }
@@ -295,15 +308,16 @@ public class TMModel implements ITMModel{
         
         String line = new String();
         int i = 0;
-        while (i < lines.size())
+        int j = lines.size();
+        while (i < j)
         {
             line = lines.pop();
             String[] tokens = line.split(" ", 3);
-            if (tokens[0] == "Start")
+            if (tokens[0].compareTo("Start") == 0)
             {
                 starts.push(LocalDateTime.parse(tokens[2]));
             }
-            else if (tokens[0] == "Stop")
+            else if (tokens[0].compareTo("Stop") == 0)
             {
                 stops.push(LocalDateTime.parse(tokens[2]));
             } 
@@ -311,7 +325,8 @@ public class TMModel implements ITMModel{
         }
         
         i = 0;
-        while (i < stops.size())
+        j = stops.size();
+        while (i < j)
         {
             totalTime += ChronoUnit.SECONDS.between(starts.pop(), stops.pop());
         }
@@ -324,7 +339,8 @@ public class TMModel implements ITMModel{
         LinkedList<String> lines = new LinkedList<>();
         log.read(lines);
         int i = 0;
-        while (i < lines.size())
+        int j = lines.size();
+        while (i < j)
         {
             String line = lines.pop();
             String[] tokens = line.split(" ", 3);
@@ -340,11 +356,12 @@ public class TMModel implements ITMModel{
         LinkedList<String> lines = new LinkedList<>();
         log.read(lines);
         int i = 0;
-        while (i < lines.size())
+        int j = lines.size();
+        while (i < j)
         {
             String line = lines.pop();
             String[] tokens = line.split(" ", 3);
-            if (tokens[0] == "Describe")
+            if (tokens[0].compareTo("Size") == 0)
             {
                 tasks.add(tokens[2]);
             }
