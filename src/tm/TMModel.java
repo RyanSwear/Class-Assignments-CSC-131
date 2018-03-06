@@ -321,12 +321,35 @@ public class TMModel implements ITMModel{
     public Set<String> taskNames()
     {
         Set<String> tasks = new HashSet<>();
+        LinkedList<String> lines = new LinkedList<>();
+        log.read(lines);
+        int i = 0;
+        while (i < lines.size())
+        {
+            String line = lines.pop();
+            String[] tokens = line.split(" ", 3);
+            tasks.add(tokens[1]);
+            i++;
+        }
         return tasks;
     }
     
     public Set<String> taskSizes()
     {
         Set<String> tasks = new HashSet<>();
+        LinkedList<String> lines = new LinkedList<>();
+        log.read(lines);
+        int i = 0;
+        while (i < lines.size())
+        {
+            String line = lines.pop();
+            String[] tokens = line.split(" ", 3);
+            if (tokens[0] == "Describe")
+            {
+                tasks.add(tokens[2]);
+            }
+            i++;
+        }
         return tasks;
     }
     
