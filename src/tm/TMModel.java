@@ -5,9 +5,7 @@
  */
 package tm;
 
-import java.util.Date;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 import java.time.*;
 import java.time.temporal.ChronoUnit;
 
@@ -201,7 +199,7 @@ public class TMModel implements ITMModel{
             }
             i++;
         }
-        time1 = seconds.toString();
+        time1 = min.toString();
         return time1;
     }
     
@@ -237,7 +235,7 @@ public class TMModel implements ITMModel{
             }
             i++;
         }
-        time1 = seconds.toString();
+        time1 = max.toString();
         return time1;
     }
     
@@ -261,6 +259,7 @@ public class TMModel implements ITMModel{
                 time = taskElapsedTime(tokens[1]);//string in seconds in Long form
                 seconds = Long.parseLong(time);
                 ave += seconds;
+                counter++;
             }
             i++;
         }
@@ -323,6 +322,7 @@ public class TMModel implements ITMModel{
         while (i < j)
         {
             totalTime += ChronoUnit.SECONDS.between(starts.pop(), stops.pop());
+            i++;
         }
         return totalTime.toString();
     }

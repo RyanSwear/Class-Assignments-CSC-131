@@ -4,8 +4,7 @@
 package tm;
 
 import java.util.*;
-import java.io.*;
-import java.util.concurrent.TimeUnit;
+
 public class TM {
 
     TMModel tmModel = new TMModel();
@@ -126,14 +125,14 @@ public class TM {
       //display each task and its characteristics
       for (int i = 0; i < tasks.length; i++)
       {
-          System.out.println("Task Name: " + tasks[i] + " Total Time:" + tmModel.taskElapsedTime(tasks[i]));
+          System.out.println("Task Name: " + tasks[i] + " Total Time:" + tmModel.taskElapsedTime(tasks[i]) + " seconds");
           System.out.println("Description: " + tmModel.taskDescription(tasks[i]));
           System.out.println("Size: " + tmModel.taskSize(tasks[i]));
           System.out.println();
       }
       //display time statistics
       Set<String> y = tmModel.taskSizes();
-      String[] sizes = y.toArray(new String[x.size()]);
+      String[] sizes = y.toArray(new String[y.size()]);
       for (int i = 0; i < sizes.length; i++)
       {
           System.out.println("Size: " + sizes[i] + " Min Time: " + tmModel.minTimeForSize(sizes[i]) + " seconds  Max Time: " + tmModel.maxTimeForSize(sizes[i]) + " seconds");
