@@ -108,9 +108,33 @@ public class TM {
                     }
                     break;
                 }
+            case "MIN":
+            {
+                String size = args[1];
+                System.out.println("Size: " + size + " Min Time: " + tmModel.minTimeForSize(size) + " seconds");
+                Set<String> tasksWSize = tmModel.taskNamesForSize(size);
+                System.out.println("Tasks with this size: " + tasksWSize + "\n");
+                break;
+            }
+            case "MAX":
+            {
+                String size = args[1];
+                System.out.println("Size: " + size + " Max Time: " + tmModel.maxTimeForSize(size) + " seconds");
+                Set<String> tasksWSize = tmModel.taskNamesForSize(size);
+                System.out.println("Tasks with this size: " + tasksWSize + "\n");
+                break;
+            }
+            case "AVG":
+            {
+                String size = args[1];
+                System.out.println("Size: " + size + " Average Time: " + tmModel.avgTimeForSize(size) + " seconds " + "\n"); 
+                Set<String> tasksWSize = tmModel.taskNamesForSize(size);
+                System.out.println("Tasks with this size: " + tasksWSize + "\n");
+                break;
+            }
             default:
             {
-                System.out.println("Please enter a valid command: start, stop, describe, size, summary, rename, delete");
+                System.out.println("Please enter a valid command: start, stop, describe, size, summary, rename, delete, min, max, avg");
                 break;
             }
             }
